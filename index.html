@@ -1078,15 +1078,11 @@
     <div class="contact-info reveal">
       <div class="contact-info-item">
         <span class="contact-info-label">Email</span>
-        <a href="mailto:tom.hanacek@protonmail.com" class="contact-info-value">tom.hanacek@protonmail.com</a>
+        <a href="mailto:info@hanacektom.cz" class="contact-info-value">info@hanacektom.cz</a>
       </div>
       <div class="contact-info-item">
-        <span class="contact-info-label">Telefon</span>
-        <a href="tel:+420731891350" class="contact-info-value">+420 731 891 350</a>
-      </div>
-      <div class="contact-info-item">
-        <span class="contact-info-label">IČ</span>
-        <span class="contact-info-value">144 00 618</span>
+        <span class="contact-info-label">Web</span>
+        <a href="https://hanacektom.cz" class="contact-info-value">hanacektom.cz</a>
       </div>
       <div class="contact-info-item">
         <span class="contact-info-label">Lokalita</span>
@@ -1130,13 +1126,13 @@
 <footer>
   <span class="footer-copy">© 2026 Tomáš Hanáček. Všechna práva vyhrazena.</span>
   <ul class="footer-links">
-    <li><a href="https://www.instagram.com/tomas_hanacek/" target="_blank" rel="noopener">Instagram</a></li>
-    <li><a href="https://www.facebook.com/profile.php?id=61553228531039" target="_blank" rel="noopener">Facebook</a></li>
+    <li><a href="#">Instagram</a></li>
+    <li><a href="#">LinkedIn</a></li>
     <li><a href="#">GDPR</a></li>
   </ul>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
   // Scroll reveal
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry, i) => {
@@ -1177,4 +1173,15 @@
     let current = '';
     sections.forEach(section => {
       const sectionTop = section.offsetTop - 100;
-      if (scrollY >= 
+      if (scrollY >= sectionTop) current = section.getAttribute('id');
+    });
+    navLinks.forEach(link => {
+      link.style.color = link.getAttribute('href') === `#${current}` 
+        ? 'var(--accent)' 
+        : '';
+    });
+  });
+</script>
+
+</body>
+</html>
