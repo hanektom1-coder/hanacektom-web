@@ -1115,42 +1115,28 @@
 </footer>
 
 <script>
-  // Scroll reveal — robustní verze s fallbackem
-  (function() {
-    var reveals = document.querySelectorAll('.reveal');
-
-    // Fallback: pokud observer selže, zobraz vše po 500ms
-    var fallbackTimer = setTimeout(function() {
-      reveals.forEach(function(el) { el.classList.add('visible'); });
-    }, 800);
-
-    if (!('IntersectionObserver' in window)) {
-      // Prohlížeč nepodporuje observer — zobraz vše hned
-      reveals.forEach(function(el) { el.classList.add('visible'); });
-      clearTimeout(fallbackTimer);
-      return;
-    }
-
-    var observer = new IntersectionObserver(function(entries) {
-      entries.forEach(function(entry, i) {
-        if (entry.isIntersecting) {
-          setTimeout(function() {
-            entry.target.classList.add('visible');
-          }, i * 60);
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.05, rootMargin: '0px 0px -20px 0px' });
-
-    reveals.forEach(function(el) { observer.observe(el); });
-
-    // Zrušit fallback pokud observer funguje (první element se zobrazí do 1s)
-    setTimeout(function() {
-      if (document.querySelector('.reveal.visible')) {
-        clearTimeout(fallbackTimer);
+  // Scroll reveal — spolehlivá verze bez IntersectionObserver
+  function revealOnScroll() {
+    var reveals = document.querySelectorAll('.reveal:not(.visible)');
+    var windowHeight = window.innerHeight;
+    reveals.forEach(function(el) {
+      var rect = el.getBoundingClientRect();
+      if (rect.top < windowHeight - 40) {
+        el.classList.add('visible');
       }
-    }, 400);
-  })();
+    });
+  }
+
+  // Spustit při načtení (pro prvky v horní části stránky)
+  window.addEventListener('load', function() {
+    revealOnScroll();
+  });
+
+  // Spustit při scrollu
+  window.addEventListener('scroll', revealOnScroll, { passive: true });
+
+  // Záchrana — po 1 sekundě zobraz vše co ještě není viditelné
+  setTimeout(revealOnScroll, 1000);
 
   // Filter buttons
   document.querySelectorAll('.filter-btn').forEach(btn => {
