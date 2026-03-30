@@ -878,80 +878,56 @@
 
   <div class="portfolio-grid reveal">
     <div class="portfolio-item">
-      <div class="portfolio-placeholder">
-        <div class="placeholder-pattern"></div>
-        <span class="placeholder-icon">🚁</span>
-        <span class="placeholder-label">Vaše foto sem</span>
-      </div>
-      <div class="portfolio-overlay">
-        <div>
-          <span class="portfolio-cat">Dron foto</span>
-          <div class="portfolio-label">Letecký projekt</div>
-        </div>
-      </div>
-    </div>
-    <div class="portfolio-item">
-      <div class="portfolio-placeholder">
-        <div class="placeholder-pattern"></div>
-        <span class="placeholder-icon">🏠</span>
-        <span class="placeholder-label">Vaše foto sem</span>
-      </div>
-      <div class="portfolio-overlay">
-        <div>
-          <span class="portfolio-cat">Reality</span>
-          <div class="portfolio-label">Rodinný dům</div>
-        </div>
-      </div>
-    </div>
-    <div class="portfolio-item">
-      <div class="portfolio-placeholder">
-        <div class="placeholder-pattern"></div>
-        <span class="placeholder-icon">📸</span>
-        <span class="placeholder-label">Vaše foto sem</span>
-      </div>
-      <div class="portfolio-overlay">
-        <div>
-          <span class="portfolio-cat">Reportáž</span>
-          <div class="portfolio-label">Firemní akce</div>
-        </div>
-      </div>
-    </div>
-    <div class="portfolio-item">
-      <div class="portfolio-placeholder">
-        <div class="placeholder-pattern"></div>
-        <span class="placeholder-icon">🤖</span>
-        <span class="placeholder-label">Vaše foto sem</span>
-      </div>
+      <img src="images/portfolio/ai_01_bryle_vb.webp" alt="AI vizuál — brýle Victoria Beckham" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;">
       <div class="portfolio-overlay">
         <div>
           <span class="portfolio-cat">AI vizuály</span>
-          <div class="portfolio-label">Produktový vizuál</div>
+          <div class="portfolio-label">Brýle Victoria Beckham</div>
         </div>
       </div>
     </div>
     <div class="portfolio-item">
-      <div class="portfolio-placeholder">
-        <div class="placeholder-pattern"></div>
-        <span class="placeholder-icon">💻</span>
-        <span class="placeholder-label">Vaše foto sem</span>
-      </div>
+      <img src="images/portfolio/ai_02_valentino.webp" alt="AI vizuál — Valentino parfém" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;">
       <div class="portfolio-overlay">
         <div>
-          <span class="portfolio-cat">Web</span>
-          <div class="portfolio-label">Portfolio web</div>
+          <span class="portfolio-cat">AI vizuály</span>
+          <div class="portfolio-label">Valentino — parfém</div>
         </div>
       </div>
     </div>
     <div class="portfolio-item">
-      <div class="portfolio-placeholder">
-        <div class="placeholder-pattern"></div>
-        <span class="placeholder-icon">⚙️</span>
-        <span class="placeholder-label">Vaše foto sem</span>
-      </div>
+      <img src="images/portfolio/ai_03_bryle_floating.webp" alt="AI vizuál — plovoucí brýle" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;">
       <div class="portfolio-overlay">
         <div>
-          <span class="portfolio-cat">Technika</span>
-          <div class="portfolio-label">Strojní fotografie</div>
+          <span class="portfolio-cat">AI vizuály</span>
+          <div class="portfolio-label">Brýle — levitace</div>
+        </div>
+      </div>
+    </div>
+    <div class="portfolio-item">
+      <img src="images/portfolio/ai_04_bryle_detail.webp" alt="AI vizuál — detail brýlí" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;">
+      <div class="portfolio-overlay">
+        <div>
+          <span class="portfolio-cat">AI vizuály</span>
+          <div class="portfolio-label">Brýle — detail</div>
+        </div>
+      </div>
+    </div>
+    <div class="portfolio-item">
+      <img src="images/portfolio/ai_05_rolex.webp" alt="AI vizuál — Rolex" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;">
+      <div class="portfolio-overlay">
+        <div>
+          <span class="portfolio-cat">AI vizuály</span>
+          <div class="portfolio-label">Rolex — urban concept</div>
+        </div>
+      </div>
+    </div>
+    <div class="portfolio-item">
+      <img src="images/portfolio/ai_06_kombucha.webp" alt="AI vizuál — Kombucha" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;">
+      <div class="portfolio-overlay">
+        <div>
+          <span class="portfolio-cat">AI vizuály</span>
+          <div class="portfolio-label">Kombucha — produktový vizuál</div>
         </div>
       </div>
     </div>
@@ -1078,7 +1054,7 @@
     <div class="contact-info reveal">
       <div class="contact-info-item">
         <span class="contact-info-label">Email</span>
-        <a href="mailto:info@hanacektom.cz" class="contact-info-value">info@hanacektom.cz</a>
+        <span class="contact-info-value">tom.hanacek [at] protonmail.com</span>
       </div>
       <div class="contact-info-item">
         <span class="contact-info-label">Web</span>
@@ -1173,15 +1149,4 @@
     let current = '';
     sections.forEach(section => {
       const sectionTop = section.offsetTop - 100;
-      if (scrollY >= sectionTop) current = section.getAttribute('id');
-    });
-    navLinks.forEach(link => {
-      link.style.color = link.getAttribute('href') === `#${current}` 
-        ? 'var(--accent)' 
-        : '';
-    });
-  });
-</script>
-
-</body>
-</html>
+      if (scrollY >= 
