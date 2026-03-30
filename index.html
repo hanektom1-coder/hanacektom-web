@@ -1,0 +1,1180 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tomáš Hanáček — Fotografie & Vizuální tvorba</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --black: #0a0a0a;
+    --white: #f5f2ed;
+    --accent: #c8f23a;
+    --gray: #2a2a2a;
+    --gray-mid: #555;
+    --gray-light: #888;
+    --font-display: 'Bebas Neue', sans-serif;
+    --font-body: 'DM Sans', sans-serif;
+    --font-mono: 'DM Mono', monospace;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 20px 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    mix-blend-mode: normal;
+    background: rgba(10,10,10,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(245,242,237,0.07);
+  }
+
+  .nav-logo {
+    font-family: var(--font-display);
+    font-size: 22px;
+    letter-spacing: 0.1em;
+    color: var(--white);
+    text-decoration: none;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 36px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gray-light);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--accent); }
+
+  /* ─── HERO ─── */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 0 48px 72px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background: 
+      radial-gradient(ellipse 60% 50% at 70% 40%, rgba(200,242,58,0.06) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 60% at 20% 80%, rgba(200,242,58,0.04) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .hero-tag {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 24px;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.2s forwards;
+  }
+
+  .hero-title {
+    font-family: var(--font-display);
+    font-size: clamp(80px, 14vw, 180px);
+    line-height: 0.9;
+    letter-spacing: -0.01em;
+    color: var(--white);
+    opacity: 0;
+    animation: fadeUp 0.9s 0.4s forwards;
+  }
+
+  .hero-title span {
+    color: var(--accent);
+    display: block;
+  }
+
+  .hero-sub {
+    margin-top: 32px;
+    max-width: 480px;
+    font-size: 15px;
+    font-weight: 300;
+    color: var(--gray-light);
+    line-height: 1.7;
+    opacity: 0;
+    animation: fadeUp 0.9s 0.6s forwards;
+  }
+
+  .hero-cta {
+    margin-top: 40px;
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    opacity: 0;
+    animation: fadeUp 0.9s 0.8s forwards;
+  }
+
+  .btn-primary {
+    display: inline-block;
+    padding: 14px 32px;
+    background: var(--accent);
+    color: var(--black);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    font-weight: 500;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(200,242,58,0.25);
+  }
+
+  .btn-ghost {
+    display: inline-block;
+    padding: 14px 32px;
+    border: 1px solid rgba(245,242,237,0.2);
+    color: var(--white);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: border-color 0.2s, color 0.2s;
+  }
+
+  .btn-ghost:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .hero-scroll {
+    position: absolute;
+    bottom: 40px;
+    right: 48px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    opacity: 0;
+    animation: fadeUp 1s 1.2s forwards;
+  }
+
+  .hero-scroll span {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    color: var(--gray-light);
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+  }
+
+  .scroll-line {
+    width: 1px;
+    height: 60px;
+    background: linear-gradient(to bottom, var(--gray-light), transparent);
+    animation: scrollPulse 2s ease-in-out infinite;
+  }
+
+  /* ─── SECTIONS ─── */
+  section { padding: 120px 48px; }
+
+  .section-tag {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 16px;
+  }
+
+  .section-title {
+    font-family: var(--font-display);
+    font-size: clamp(40px, 6vw, 72px);
+    line-height: 1;
+    letter-spacing: 0.02em;
+    color: var(--white);
+    margin-bottom: 48px;
+  }
+
+  /* ─── SERVICES ─── */
+  #sluzby { border-top: 1px solid rgba(245,242,237,0.07); }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1px;
+    background: rgba(245,242,237,0.07);
+    border: 1px solid rgba(245,242,237,0.07);
+  }
+
+  .service-card {
+    background: var(--black);
+    padding: 40px 36px;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.3s;
+    cursor: default;
+  }
+
+  .service-card::before {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--accent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .service-card:hover::before { transform: scaleX(1); }
+  .service-card:hover { background: var(--gray); }
+
+  .service-number {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--gray-mid);
+    letter-spacing: 0.1em;
+    margin-bottom: 20px;
+  }
+
+  .service-icon {
+    font-size: 28px;
+    margin-bottom: 16px;
+    display: block;
+    line-height: 1;
+  }
+
+  .service-name {
+    font-family: var(--font-display);
+    font-size: 28px;
+    letter-spacing: 0.05em;
+    color: var(--white);
+    margin-bottom: 12px;
+    line-height: 1.1;
+  }
+
+  .service-desc {
+    font-size: 13px;
+    color: var(--gray-light);
+    line-height: 1.6;
+    font-weight: 300;
+  }
+
+  /* ─── PORTFOLIO ─── */
+  #portfolio { border-top: 1px solid rgba(245,242,237,0.07); }
+
+  .portfolio-filter {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 40px;
+  }
+
+  .filter-btn {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 8px 18px;
+    border: 1px solid rgba(245,242,237,0.15);
+    background: transparent;
+    color: var(--gray-light);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .filter-btn.active, .filter-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: rgba(200,242,58,0.05);
+  }
+
+  .portfolio-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 16px;
+  }
+
+  .portfolio-item {
+    position: relative;
+    overflow: hidden;
+    background: var(--gray);
+    cursor: pointer;
+  }
+
+  .portfolio-item:nth-child(1) { grid-column: span 7; grid-row: span 2; aspect-ratio: auto; }
+  .portfolio-item:nth-child(2) { grid-column: span 5; }
+  .portfolio-item:nth-child(3) { grid-column: span 5; }
+  .portfolio-item:nth-child(4) { grid-column: span 4; }
+  .portfolio-item:nth-child(5) { grid-column: span 4; }
+  .portfolio-item:nth-child(6) { grid-column: span 4; }
+
+  .portfolio-placeholder {
+    width: 100%;
+    aspect-ratio: 4/3;
+    background: var(--gray);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 8px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .portfolio-item:nth-child(1) .portfolio-placeholder { aspect-ratio: 16/9; }
+
+  .placeholder-pattern {
+    position: absolute;
+    inset: 0;
+    opacity: 0.06;
+    background-image: repeating-linear-gradient(
+      45deg,
+      var(--white) 0px,
+      var(--white) 1px,
+      transparent 1px,
+      transparent 40px
+    );
+  }
+
+  .placeholder-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gray-mid);
+    position: relative;
+    z-index: 1;
+  }
+
+  .placeholder-icon {
+    font-size: 24px;
+    position: relative;
+    z-index: 1;
+    opacity: 0.3;
+  }
+
+  .portfolio-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(10,10,10,0.9) 0%, transparent 50%);
+    opacity: 0;
+    transition: opacity 0.3s;
+    display: flex;
+    align-items: flex-end;
+    padding: 24px;
+  }
+
+  .portfolio-item:hover .portfolio-overlay { opacity: 1; }
+
+  .portfolio-label {
+    font-family: var(--font-display);
+    font-size: 20px;
+    letter-spacing: 0.06em;
+    color: var(--white);
+  }
+
+  .portfolio-cat {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 4px;
+    display: block;
+  }
+
+  /* ─── O MNĚ ─── */
+  #o-mne {
+    border-top: 1px solid rgba(245,242,237,0.07);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+
+  .about-left { }
+
+  .about-photo {
+    aspect-ratio: 3/4;
+    background: var(--gray);
+    position: relative;
+    overflow: hidden;
+    max-width: 420px;
+  }
+
+  .about-photo-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 12px;
+    position: relative;
+  }
+
+  .about-photo-corner {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    border-color: var(--accent);
+    border-style: solid;
+    border-width: 0;
+  }
+
+  .about-photo-corner.tl { top: 16px; left: 16px; border-top-width: 2px; border-left-width: 2px; }
+  .about-photo-corner.br { bottom: 16px; right: 16px; border-bottom-width: 2px; border-right-width: 2px; }
+
+  .about-right { padding-top: 8px; }
+
+  .about-bio {
+    font-size: 15px;
+    font-weight: 300;
+    color: rgba(245,242,237,0.75);
+    line-height: 1.8;
+    margin-bottom: 24px;
+  }
+
+  .about-bio strong {
+    color: var(--white);
+    font-weight: 500;
+  }
+
+  .about-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: rgba(245,242,237,0.07);
+    border: 1px solid rgba(245,242,237,0.07);
+    margin-top: 40px;
+  }
+
+  .stat-item {
+    background: var(--black);
+    padding: 24px;
+  }
+
+  .stat-num {
+    font-family: var(--font-display);
+    font-size: 40px;
+    color: var(--accent);
+    line-height: 1;
+    display: block;
+  }
+
+  .stat-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gray-light);
+    margin-top: 4px;
+  }
+
+  .skills-list {
+    list-style: none;
+    margin-top: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .skill-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(245,242,237,0.07);
+    font-size: 13px;
+    color: var(--gray-light);
+    font-weight: 300;
+  }
+
+  .skill-dot {
+    width: 6px;
+    height: 6px;
+    background: var(--accent);
+    flex-shrink: 0;
+  }
+
+  /* ─── CENÍK ─── */
+  #cenik { border-top: 1px solid rgba(245,242,237,0.07); }
+
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1px;
+    background: rgba(245,242,237,0.07);
+    border: 1px solid rgba(245,242,237,0.07);
+  }
+
+  .pricing-card {
+    background: var(--black);
+    padding: 40px 36px;
+    position: relative;
+    transition: background 0.3s;
+  }
+
+  .pricing-card.featured {
+    background: var(--gray);
+  }
+
+  .pricing-card.featured::after {
+    content: 'POPULÁRNÍ';
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    color: var(--black);
+    background: var(--accent);
+    padding: 4px 10px;
+  }
+
+  .pricing-tier {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gray-light);
+    margin-bottom: 12px;
+  }
+
+  .pricing-name {
+    font-family: var(--font-display);
+    font-size: 32px;
+    letter-spacing: 0.05em;
+    color: var(--white);
+    margin-bottom: 24px;
+    line-height: 1;
+  }
+
+  .pricing-price {
+    font-family: var(--font-display);
+    font-size: 48px;
+    color: var(--accent);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .pricing-unit {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: var(--gray-light);
+    margin-bottom: 32px;
+  }
+
+  .pricing-divider {
+    height: 1px;
+    background: rgba(245,242,237,0.07);
+    margin-bottom: 28px;
+  }
+
+  .pricing-features {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 36px;
+  }
+
+  .pricing-features li {
+    font-size: 13px;
+    font-weight: 300;
+    color: rgba(245,242,237,0.7);
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+
+  .pricing-features li::before {
+    content: '—';
+    color: var(--accent);
+    flex-shrink: 0;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    margin-top: 2px;
+  }
+
+  /* ─── KONTAKT ─── */
+  #kontakt {
+    border-top: 1px solid rgba(245,242,237,0.07);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+  }
+
+  .contact-left .section-title { margin-bottom: 24px; }
+
+  .contact-desc {
+    font-size: 15px;
+    font-weight: 300;
+    color: var(--gray-light);
+    line-height: 1.7;
+    margin-bottom: 40px;
+  }
+
+  .contact-info { display: flex; flex-direction: column; gap: 20px; }
+
+  .contact-info-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .contact-info-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gray-mid);
+  }
+
+  .contact-info-value {
+    font-size: 15px;
+    color: var(--white);
+    font-weight: 300;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .contact-info-value:hover { color: var(--accent); }
+
+  .contact-form { display: flex; flex-direction: column; gap: 20px; }
+
+  .form-group { display: flex; flex-direction: column; gap: 8px; }
+
+  .form-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gray-light);
+  }
+
+  .form-input, .form-textarea {
+    background: var(--gray);
+    border: 1px solid rgba(245,242,237,0.1);
+    color: var(--white);
+    font-family: var(--font-body);
+    font-size: 14px;
+    font-weight: 300;
+    padding: 14px 16px;
+    outline: none;
+    transition: border-color 0.2s;
+    resize: none;
+  }
+
+  .form-input:focus, .form-textarea:focus {
+    border-color: var(--accent);
+  }
+
+  .form-input::placeholder, .form-textarea::placeholder {
+    color: var(--gray-mid);
+    font-style: italic;
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    padding: 40px 48px;
+    border-top: 1px solid rgba(245,242,237,0.07);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer-copy {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: var(--gray-mid);
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 24px;
+    list-style: none;
+  }
+
+  .footer-links a {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: var(--gray-mid);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .footer-links a:hover { color: var(--accent); }
+
+  /* ─── ANIMATIONS ─── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.4; transform: scaleY(1); }
+    50% { opacity: 1; transform: scaleY(0.7); }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(32px);
+    transition: opacity 0.7s cubic-bezier(0.22,1,0.36,1), transform 0.7s cubic-bezier(0.22,1,0.36,1);
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 900px) {
+    nav { padding: 16px 24px; }
+    .nav-links { display: none; }
+    .hero { padding: 0 24px 60px; }
+    section { padding: 80px 24px; }
+    #o-mne { grid-template-columns: 1fr; gap: 40px; }
+    #kontakt { grid-template-columns: 1fr; gap: 48px; }
+    footer { flex-direction: column; gap: 16px; padding: 32px 24px; }
+    .portfolio-grid { grid-template-columns: 1fr 1fr; }
+    .portfolio-item { grid-column: span 1 !important; grid-row: span 1 !important; }
+  }
+
+  @media (max-width: 600px) {
+    .hero-title { font-size: 60px; }
+    .portfolio-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ─── NAVIGATION ─── -->
+<nav>
+  <a href="#" class="nav-logo">TH</a>
+  <ul class="nav-links">
+    <li><a href="#sluzby">Služby</a></li>
+    <li><a href="#portfolio">Portfolio</a></li>
+    <li><a href="#o-mne">O mně</a></li>
+    <li><a href="#cenik">Ceník</a></li>
+    <li><a href="#kontakt">Kontakt</a></li>
+  </ul>
+</nav>
+
+<!-- ─── HERO ─── -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <p class="hero-tag">Fotograf · Drony · AI vizuály · Weby</p>
+  <h1 class="hero-title">
+    TOMÁŠ<br>
+    <span>HANÁČEK</span>
+  </h1>
+  <p class="hero-sub">
+    Zachycuji momenty z pohledu, který jste ještě neviděli. Letecká fotografie, komerční video, AI vizuály a weby pro živnostníky.
+  </p>
+  <div class="hero-cta">
+    <a href="#portfolio" class="btn-primary">Prohlédnout práce</a>
+    <a href="#kontakt" class="btn-ghost">Napište mi</a>
+  </div>
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<!-- ─── SLUŽBY ─── -->
+<section id="sluzby">
+  <p class="section-tag reveal">Co dělám</p>
+  <h2 class="section-title reveal">SLUŽBY</h2>
+  <div class="services-grid">
+    <div class="service-card reveal">
+      <div class="service-number">01</div>
+      <span class="service-icon">🚁</span>
+      <h3 class="service-name">DRON FOTO & VIDEO</h3>
+      <p class="service-desc">Letecké záběry z dronu — nemovitosti, akce, krajina, průmysl. Fotogrammetrie a 3D snímkování.</p>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-number">02</div>
+      <span class="service-icon">🏠</span>
+      <h3 class="service-name">REALITY & PROSTORY</h3>
+      <p class="service-desc">Prezentace nemovitostí a komerčních prostor. Fotografie, která prodává.</p>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-number">03</div>
+      <span class="service-icon">📸</span>
+      <h3 class="service-name">REPORTÁŽ & EVENTS</h3>
+      <p class="service-desc">Reportážní fotografie z akcí, firemních událostí a kulturních projektů.</p>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-number">04</div>
+      <span class="service-icon">🤖</span>
+      <h3 class="service-name">AI VIZUÁLY</h3>
+      <p class="service-desc">Produktové vizuály a kreativní obrazy vytvořené pomocí umělé inteligence. Rychle, cenově dostupně.</p>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-number">05</div>
+      <span class="service-icon">💻</span>
+      <h3 class="service-name">WEBY & APLIKACE</h3>
+      <p class="service-desc">Jednoduché weby a webové aplikace pro živnostníky. Rychlé, moderní, bez zbytečné složitosti.</p>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-number">06</div>
+      <span class="service-icon">🎬</span>
+      <h3 class="service-name">VIDEO & PROMO</h3>
+      <p class="service-desc">Promo videa, produktová videa, strojní technika. Střih a postprodukce v ceně.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ─── PORTFOLIO ─── -->
+<section id="portfolio">
+  <p class="section-tag reveal">Vybrané projekty</p>
+  <h2 class="section-title reveal">PORTFOLIO</h2>
+
+  <div class="portfolio-filter reveal">
+    <button class="filter-btn active">Vše</button>
+    <button class="filter-btn">Dron</button>
+    <button class="filter-btn">Reality</button>
+    <button class="filter-btn">Reportáž</button>
+    <button class="filter-btn">AI vizuály</button>
+    <button class="filter-btn">Weby</button>
+  </div>
+
+  <div class="portfolio-grid reveal">
+    <div class="portfolio-item">
+      <div class="portfolio-placeholder">
+        <div class="placeholder-pattern"></div>
+        <span class="placeholder-icon">🚁</span>
+        <span class="placeholder-label">Vaše foto sem</span>
+      </div>
+      <div class="portfolio-overlay">
+        <div>
+          <span class="portfolio-cat">Dron foto</span>
+          <div class="portfolio-label">Letecký projekt</div>
+        </div>
+      </div>
+    </div>
+    <div class="portfolio-item">
+      <div class="portfolio-placeholder">
+        <div class="placeholder-pattern"></div>
+        <span class="placeholder-icon">🏠</span>
+        <span class="placeholder-label">Vaše foto sem</span>
+      </div>
+      <div class="portfolio-overlay">
+        <div>
+          <span class="portfolio-cat">Reality</span>
+          <div class="portfolio-label">Rodinný dům</div>
+        </div>
+      </div>
+    </div>
+    <div class="portfolio-item">
+      <div class="portfolio-placeholder">
+        <div class="placeholder-pattern"></div>
+        <span class="placeholder-icon">📸</span>
+        <span class="placeholder-label">Vaše foto sem</span>
+      </div>
+      <div class="portfolio-overlay">
+        <div>
+          <span class="portfolio-cat">Reportáž</span>
+          <div class="portfolio-label">Firemní akce</div>
+        </div>
+      </div>
+    </div>
+    <div class="portfolio-item">
+      <div class="portfolio-placeholder">
+        <div class="placeholder-pattern"></div>
+        <span class="placeholder-icon">🤖</span>
+        <span class="placeholder-label">Vaše foto sem</span>
+      </div>
+      <div class="portfolio-overlay">
+        <div>
+          <span class="portfolio-cat">AI vizuály</span>
+          <div class="portfolio-label">Produktový vizuál</div>
+        </div>
+      </div>
+    </div>
+    <div class="portfolio-item">
+      <div class="portfolio-placeholder">
+        <div class="placeholder-pattern"></div>
+        <span class="placeholder-icon">💻</span>
+        <span class="placeholder-label">Vaše foto sem</span>
+      </div>
+      <div class="portfolio-overlay">
+        <div>
+          <span class="portfolio-cat">Web</span>
+          <div class="portfolio-label">Portfolio web</div>
+        </div>
+      </div>
+    </div>
+    <div class="portfolio-item">
+      <div class="portfolio-placeholder">
+        <div class="placeholder-pattern"></div>
+        <span class="placeholder-icon">⚙️</span>
+        <span class="placeholder-label">Vaše foto sem</span>
+      </div>
+      <div class="portfolio-overlay">
+        <div>
+          <span class="portfolio-cat">Technika</span>
+          <div class="portfolio-label">Strojní fotografie</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── O MNĚ ─── -->
+<section id="o-mne">
+  <div class="about-left">
+    <p class="section-tag reveal">Příběh za objektivem</p>
+    <h2 class="section-title reveal">O MNĚ</h2>
+    <div class="about-photo reveal">
+      <div class="about-photo-placeholder">
+        <div class="placeholder-pattern"></div>
+        <div class="about-photo-corner tl"></div>
+        <div class="about-photo-corner br"></div>
+        <span style="font-size:48px;opacity:0.15">👤</span>
+        <span class="placeholder-label">Vaše fotografie</span>
+      </div>
+    </div>
+  </div>
+  <div class="about-right">
+    <p class="about-bio reveal">
+      Jsem <strong>Tomáš Hanáček</strong>, fotograf a vizuální tvůrce z Uherského Hradiště.
+      Pohled shora mě fascinuje — proto létám s dronem a hledám kompozice, které se jinudy nenajdou.
+    </p>
+    <p class="about-bio reveal">
+      Vedle klasické fotografické práce se věnuji <strong>AI vizuálům</strong> — produktovým fotografiím a kreativním obrazům generovaným umělou inteligencí. A protože vím, jak vypadá dobrý web, pomáhám <strong>živnostníkům a firmám</strong> s jejich online prezentací.
+    </p>
+    <ul class="skills-list reveal">
+      <li class="skill-item"><span class="skill-dot"></span>Pilot dronu — kategorie A1/A3, SAIL I</li>
+      <li class="skill-item"><span class="skill-dot"></span>Komerční fotografie & video</li>
+      <li class="skill-item"><span class="skill-dot"></span>Fotogrammetrie & 3D skenování</li>
+      <li class="skill-item"><span class="skill-dot"></span>AI image generation & retouch</li>
+      <li class="skill-item"><span class="skill-dot"></span>Tvorba webů pro živnostníky</li>
+    </ul>
+    <div class="about-stats reveal">
+      <div class="stat-item">
+        <span class="stat-num">200+</span>
+        <span class="stat-label">Dokončených projektů</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">8+</span>
+        <span class="stat-label">Let zkušeností</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">5★</span>
+        <span class="stat-label">Hodnocení klientů</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">3</span>
+        <span class="stat-label">Oblasti tvorby</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── CENÍK ─── -->
+<section id="cenik">
+  <p class="section-tag reveal">Transparentní ceny</p>
+  <h2 class="section-title reveal">CENÍK</h2>
+  <div class="pricing-grid">
+
+    <div class="pricing-card reveal">
+      <div class="pricing-tier">Fotografie</div>
+      <div class="pricing-name">REPORTÁŽ</div>
+      <div class="pricing-price">2 500</div>
+      <div class="pricing-unit">Kč / hodina</div>
+      <div class="pricing-divider"></div>
+      <ul class="pricing-features">
+        <li>Do 2 hodin focení</li>
+        <li>Editace a dodání do 5 dnů</li>
+        <li>30+ upravených snímků</li>
+        <li>Licence pro web a tisk</li>
+      </ul>
+      <a href="#kontakt" class="btn-ghost" style="text-align:center;display:block">Poptat</a>
+    </div>
+
+    <div class="pricing-card featured reveal">
+      <div class="pricing-tier">Dron</div>
+      <div class="pricing-name">LETECKÝ BALÍČEK</div>
+      <div class="pricing-price">4 900</div>
+      <div class="pricing-unit">Kč / den</div>
+      <div class="pricing-divider"></div>
+      <ul class="pricing-features">
+        <li>Celý den focení & natáčení</li>
+        <li>Foto i video v ceně</li>
+        <li>Editace a střih</li>
+        <li>Doručení do 7 dnů</li>
+        <li>Pojištění dronu zahrnuto</li>
+      </ul>
+      <a href="#kontakt" class="btn-primary" style="text-align:center;display:block">Poptat</a>
+    </div>
+
+    <div class="pricing-card reveal">
+      <div class="pricing-tier">Digitální</div>
+      <div class="pricing-name">WEB & AI VIZUÁL</div>
+      <div class="pricing-price">od 8 000</div>
+      <div class="pricing-unit">Kč / projekt</div>
+      <div class="pricing-divider"></div>
+      <ul class="pricing-features">
+        <li>Jednoduchý web pro živnostníky</li>
+        <li>Mobilní verze v ceně</li>
+        <li>AI produktové vizuály</li>
+        <li>Podpora po spuštění</li>
+      </ul>
+      <a href="#kontakt" class="btn-ghost" style="text-align:center;display:block">Poptat</a>
+    </div>
+
+  </div>
+  <p class="reveal" style="margin-top:24px;font-family:var(--font-mono);font-size:11px;letter-spacing:0.1em;color:var(--gray-mid);">
+    * Ceny jsou orientační. Přesná nabídka vždy po konzultaci. Doprava mimo Uherské Hradiště účtována dle dohody.
+  </p>
+</section>
+
+<!-- ─── KONTAKT ─── -->
+<section id="kontakt">
+  <div class="contact-left">
+    <p class="section-tag reveal">Pojďme na to</p>
+    <h2 class="section-title reveal">NAPIŠTE<br>MI</h2>
+    <p class="contact-desc reveal">
+      Máte projekt? Klidně napište nebo zavolejte. Rád se domluvím na schůzce a proberu s vámi, co přesně potřebujete.
+    </p>
+    <div class="contact-info reveal">
+      <div class="contact-info-item">
+        <span class="contact-info-label">Email</span>
+        <a href="mailto:tom.hanacek@protonmail.com" class="contact-info-value">tom.hanacek@protonmail.com</a>
+      </div>
+      <div class="contact-info-item">
+        <span class="contact-info-label">Telefon</span>
+        <a href="tel:+420731891350" class="contact-info-value">+420 731 891 350</a>
+      </div>
+      <div class="contact-info-item">
+        <span class="contact-info-label">IČ</span>
+        <span class="contact-info-value">144 00 618</span>
+      </div>
+      <div class="contact-info-item">
+        <span class="contact-info-label">Lokalita</span>
+        <span class="contact-info-value">Uherské Hradiště & okolí</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <form class="contact-form" onsubmit="handleSubmit(event)">
+      <div class="form-group">
+        <label class="form-label">Jméno</label>
+        <input type="text" class="form-input" placeholder="Jan Novák" required>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Email</label>
+        <input type="email" class="form-input" placeholder="jan@firma.cz" required>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Typ projektu</label>
+        <select class="form-input" style="appearance:none;cursor:pointer">
+          <option value="">— Vyberte —</option>
+          <option>Dron foto / video</option>
+          <option>Reportáž & akce</option>
+          <option>Reality</option>
+          <option>AI vizuály</option>
+          <option>Web nebo aplikace</option>
+          <option>Jiné</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Zpráva</label>
+        <textarea class="form-textarea" rows="5" placeholder="Pár slov o vašem projektu…" required></textarea>
+      </div>
+      <button type="submit" class="btn-primary" style="width:100%;border:none;cursor:pointer;font-size:12px;">ODESLAT POPTÁVKU</button>
+    </form>
+  </div>
+</section>
+
+<!-- ─── FOOTER ─── -->
+<footer>
+  <span class="footer-copy">© 2026 Tomáš Hanáček. Všechna práva vyhrazena.</span>
+  <ul class="footer-links">
+    <li><a href="https://www.instagram.com/tomas_hanacek/" target="_blank" rel="noopener">Instagram</a></li>
+    <li><a href="https://www.facebook.com/profile.php?id=61553228531039" target="_blank" rel="noopener">Facebook</a></li>
+    <li><a href="#">GDPR</a></li>
+  </ul>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => {
+          entry.target.classList.add('visible');
+        }, i * 60);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // Filter buttons
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    });
+  });
+
+  // Form submit
+  function handleSubmit(e) {
+    e.preventDefault();
+    const btn = e.target.querySelector('button[type="submit"]');
+    btn.textContent = 'ODESLÁNO ✓';
+    btn.style.background = '#c8f23a';
+    btn.style.opacity = '0.8';
+    btn.disabled = true;
+  }
+
+  // Smooth active nav link
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-links a');
+
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(section => {
+      const sectionTop = section.offsetTop - 100;
+      if (scrollY >= 
