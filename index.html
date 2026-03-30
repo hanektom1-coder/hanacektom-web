@@ -754,11 +754,18 @@
   }
 
   .reveal {
+    opacity: 0;
+    transform: translateY(32px);
+    transition: opacity 0.7s cubic-bezier(0.22,1,0.36,1), transform 0.7s cubic-bezier(0.22,1,0.36,1);
+  }
+
+  .reveal.visible {
     opacity: 1;
     transform: translateY(0);
   }
 
-  .reveal.visible {
+  /* Fallback — pokud JS selže, obsah je vždy viditelný */
+  .no-js .reveal {
     opacity: 1;
     transform: translateY(0);
   }
@@ -1108,8 +1115,42 @@
 </footer>
 
 <script>
-  // Mark all reveal elements visible immediately
-  document.querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
+  // Scroll reveal — robustní verze s fallbackem
+  (function() {
+    var reveals = document.querySelectorAll('.reveal');
+
+    // Fallback: pokud observer selže, zobraz vše po 500ms
+    var fallbackTimer = setTimeout(function() {
+      reveals.forEach(function(el) { el.classList.add('visible'); });
+    }, 800);
+
+    if (!('IntersectionObserver' in window)) {
+      // Prohlížeč nepodporuje observer — zobraz vše hned
+      reveals.forEach(function(el) { el.classList.add('visible'); });
+      clearTimeout(fallbackTimer);
+      return;
+    }
+
+    var observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry, i) {
+        if (entry.isIntersecting) {
+          setTimeout(function() {
+            entry.target.classList.add('visible');
+          }, i * 60);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.05, rootMargin: '0px 0px -20px 0px' });
+
+    reveals.forEach(function(el) { observer.observe(el); });
+
+    // Zrušit fallback pokud observer funguje (první element se zobrazí do 1s)
+    setTimeout(function() {
+      if (document.querySelector('.reveal.visible')) {
+        clearTimeout(fallbackTimer);
+      }
+    }, 400);
+  })();
 
   // Filter buttons
   document.querySelectorAll('.filter-btn').forEach(btn => {
